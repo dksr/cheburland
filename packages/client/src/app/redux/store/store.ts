@@ -5,6 +5,7 @@ import {
   errorToastMiddleware,
   leaderboardApi,
   oAuthApi,
+  themeApi,
   userApi,
 } from '@/app/redux'
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   [oAuthApi.reducerPath]: oAuthApi.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [leaderboardApi.reducerPath]: leaderboardApi.reducer,
+  [themeApi.reducerPath]: themeApi.reducer,
 })
 
 const setupStore = () => {
@@ -28,7 +30,8 @@ const setupStore = () => {
         .concat(authApi.middleware)
         .concat(oAuthApi.middleware)
         .concat(userApi.middleware)
-        .concat(leaderboardApi.middleware),
+        .concat(leaderboardApi.middleware)
+        .concat(themeApi.middleware),
     // .concat(errorToastMiddleware),
   })
 }

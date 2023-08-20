@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MantineProvider } from '@mantine/core'
 
+import { ThemeProvider } from '@/app/context'
 import { store } from '@/app/redux/store'
 import { theme } from '@/app/theme'
 
@@ -14,7 +15,9 @@ const App = () => {
   return (
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </Provider>
     </MantineProvider>
   )

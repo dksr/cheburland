@@ -9,6 +9,7 @@ import { MantineProvider } from '@mantine/core'
 import { createStaticHandler } from '@remix-run/router'
 import type * as express from 'express'
 
+import { ThemeProvider } from '@/app/context'
 import { store } from '@/app/redux'
 import { appRoutes } from '@/app/routes'
 import { theme } from '@/app/theme'
@@ -23,11 +24,14 @@ export const render = async (request: express.Request) => {
     throw context
   }
   const router = createStaticRouter(appRoutes, context)
+  const cookies = request.headers.cookie
 
   return renderToString(
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
       <Provider store={store}>
-        <Router router={router} context={context} nonce="the-nonce" />
+        <ThemeProvider cookies={cookies}>
+          <Router router={router} context={context} nonce="the-nonce" />
+        </ThemeProvider>
       </Provider>
     </MantineProvider>
     // <App />
