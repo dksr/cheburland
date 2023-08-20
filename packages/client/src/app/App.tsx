@@ -4,13 +4,18 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MantineProvider } from '@mantine/core'
 
 import { ThemeProvider } from '@/app/context'
-import { store } from '@/app/redux/store'
+import { createStore } from '@/app/redux'
 import { theme } from '@/app/theme'
 
 import { appRoutes } from './routes'
 
 const App = () => {
   const router = createBrowserRouter(appRoutes)
+
+  // const initialState = window.initialState
+  // delete window.initialState
+
+  const store = createStore()
 
   return (
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>

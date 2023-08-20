@@ -1,5 +1,9 @@
+import React from 'react'
+
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 import type { ViteDevServer } from 'vite'
 import { createServer as createViteServer } from 'vite'
 
@@ -13,6 +17,7 @@ const isDev = () => process.env.NODE_ENV === 'development'
 const serverPort = Number(process.env.SERVER_PORT) || 3000
 
 async function startServer() {
+  console.log('44444')
   const app = express()
   let vite: ViteDevServer | undefined
 
@@ -38,11 +43,22 @@ async function startServer() {
     res.json('👋 Howdy from the server :)')
   })
 
+  app.use(
+    '/api/v2/*',
+    createProxyMiddleware({
+      changeOrigin: true,
+      cookieDomainRewrite: {
+        '*': '',
+      },
+      target: 'https://ya-praktikum.tech',
+    })
+  )
+
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
 
-  app.use('*', async (req, res, next) => {
+  app.use('*', cookieParser(), async (req, res, next) => {
     const url = req.originalUrl
     interface SSRModule {
       render: (uri: express.Request) => Promise<string>
