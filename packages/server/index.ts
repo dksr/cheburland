@@ -61,7 +61,7 @@ async function startServer() {
   app.use('*', cookieParser(), async (req, res, next) => {
     const url = req.originalUrl
     interface SSRModule {
-      render: (uri: express.Request) => Promise<string>
+      render: (req: express.Request) => Promise<string>
     }
 
     let module: SSRModule
@@ -93,9 +93,18 @@ async function startServer() {
       }
 
       const { render } = module
-      const appHtml = await render(req)
+      const [initialState, appHtml] = await render(req)
+      const initStateData = JSON.stringify(initialState).replace(
+        /</g,
+        '\\u003c'
+      )
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(
+          '<!--store-data-->',
+          `<script>window.__PRELOADED_STATE__ = ${initStateData};</script>`
+        )
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
       if (isDev()) {
