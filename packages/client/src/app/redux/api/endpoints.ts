@@ -23,3 +23,5 @@ export const OAUTH_SIGNIN_PATH = `${OAUTH_PATH}/yandex`
 
 export const LEADERBOARD_PATH = 'leaderboard'
 export const LEADERBOARD_ALL_PATH = `${LEADERBOARD_PATH}/all`
+
+export const FORUM_URL = 'http://localhost:3000/topic'

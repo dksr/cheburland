@@ -1,28 +1,31 @@
 import { Button, Textarea, TextInput } from '@mantine/core'
 import { isNotEmpty, useForm } from '@mantine/form'
 
+import { useForum } from '@/hooks/useForum'
+
 const initialValues = {
-  subject: '',
+  title: '',
   message: '',
 }
 
 export const AddForumTopicForm = (): JSX.Element => {
+  const { handleAddTopic } = useForum()
   const form = useForm({
     initialValues,
     validate: {
-      subject: isNotEmpty('Поле обязательно для заполнения'),
+      title: isNotEmpty('Поле обязательно для заполнения'),
       message: isNotEmpty('Поле обязательно для заполнения'),
     },
   })
 
   return (
-    <form onSubmit={form.onSubmit(values => console.log(values))}>
+    <form onSubmit={form.onSubmit(values => handleAddTopic(values))}>
       <TextInput
         withAsterisk
         label="Тема"
         type="text"
         mb="10px"
-        {...form.getInputProps('subject')}
+        {...form.getInputProps('title')}
       />
       <Textarea
         withAsterisk
