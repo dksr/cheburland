@@ -9,7 +9,7 @@ const initialValues = {
 }
 
 export const AddForumTopicForm = (): JSX.Element => {
-  const { handleAddTopic } = useForum()
+  const { user, handleAddTopic } = useForum()
   const form = useForm({
     initialValues,
     validate: {
@@ -19,7 +19,7 @@ export const AddForumTopicForm = (): JSX.Element => {
   })
 
   return (
-    <form onSubmit={form.onSubmit(values => handleAddTopic(values))}>
+    <form onSubmit={form.onSubmit(values => handleAddTopic(values, user!))}>
       <TextInput
         withAsterisk
         label="Тема"

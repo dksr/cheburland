@@ -11,7 +11,6 @@ type ForumTableProps = {
 
 export const ForumTable: FC<ForumTableProps> = ({ topics }): JSX.Element => {
   const navigate = useNavigate()
-
   return (
     <DataTable
       highlightOnHover
@@ -19,8 +18,8 @@ export const ForumTable: FC<ForumTableProps> = ({ topics }): JSX.Element => {
       w="100vh"
       records={topics}
       columns={[
-        { accessor: 'subject', title: 'Тема' },
-        { accessor: 'replies', title: 'Ответы' },
+        { accessor: 'title', title: 'Тема' },
+        { accessor: 'replies_count', title: 'Ответы' }, // TODO: replace null to 0
       ]}
       onRowClick={({ id }) => navigate(`/forum/${id}`)}
     />

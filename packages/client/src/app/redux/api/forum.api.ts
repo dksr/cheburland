@@ -37,6 +37,11 @@ export const forumApi = createApi({
     getTopic: build.query<void, void>({
       query: () => '?limit=10&offset=0',
     }),
+    getComment: build.query({
+      query: (topicId: number) => ({
+        url: `/${topicId}/comment/`,
+      }),
+    }),
     addTopic: build.mutation<void, RowTopic>({
       query: (body: RowTopic) => ({
         url: '',
@@ -50,6 +55,7 @@ export const forumApi = createApi({
         url: `/${topicId}/comment/`,
         method: 'POST',
         body,
+        responseHandler: 'text',
       }),
     }),
     addReply: build.mutation<void, replyQ>({
@@ -67,4 +73,5 @@ export const {
   useAddTopicMutation,
   useAddCommentMutation,
   useAddReplyMutation,
+  useGetCommentQuery,
 } = forumApi

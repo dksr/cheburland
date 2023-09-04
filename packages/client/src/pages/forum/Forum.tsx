@@ -3,20 +3,16 @@ import { Link } from 'react-router-dom'
 import { Button, Flex, Paper, Title } from '@mantine/core'
 
 import { useRoutes } from '@/hooks'
+import { useForum } from '@/hooks/useForum'
 
 import { ForumTable } from './components'
-import type { Topic } from './types'
-
-const topics: Topic[] = [
-  { id: '1', subject: 'Topic 1', message: '', replies: 2 },
-  { id: '2', subject: 'Topic 2', message: '', replies: 1 },
-  { id: '3', subject: 'Topic 3', message: '', replies: 0 },
-  { id: '4', subject: 'Topic 4', message: '', replies: 5 },
-]
 
 export const Forum = (): JSX.Element => {
   const { paths } = useRoutes()
+  const { handleGetTopic } = useForum()
 
+  console.log(handleGetTopic)
+  // TODO: add conditions if topics undefined
   return (
     <Flex id="forum" py={16} mih={50} justify="center" align="center">
       <Paper shadow="xs" p="md">
@@ -28,7 +24,7 @@ export const Forum = (): JSX.Element => {
             Добавить тему
           </Button>
         </Flex>
-        <ForumTable topics={topics} />
+        <ForumTable topics={handleGetTopic} />
       </Paper>
     </Flex>
   )
