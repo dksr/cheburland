@@ -47,15 +47,13 @@ export const forumApi = createApi({
         url: '',
         method: 'POST',
         body,
-        responseHandler: 'text',
       }),
     }),
     addComment: build.mutation<void, commetQ>({
-      query: ({ topicId, ...body }: commetQ) => ({
+      query: ({ topicId, body }: commetQ) => ({
         url: `/${topicId}/comment/`,
         method: 'POST',
         body,
-        responseHandler: 'text',
       }),
     }),
     addReply: build.mutation<void, replyQ>({
